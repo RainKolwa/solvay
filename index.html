@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      var scaleMetaTag = document.createElement('meta');
+      var deltaWindowWidth = window.screen.width/640;
+      scaleMetaTag.name = 'viewport';
+      scaleMetaTag.content = 'width=device-width,user-scalable=no,initial-scale='+deltaWindowWidth;
+      document.getElementsByTagName('head')[0].appendChild(scaleMetaTag);
+    </script>
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>索尔维传奇</title>
+    <link rel="stylesheet" type="text/css" href="./css/main.css"></link>
+  </head>
+  <body landscape="no">
+    <div class="main"></div>
+    <!-- 横屏不让看 -->
+    <div class="lock"></div>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <script type="text/javascript" src="js/lodash.min.js"></script>
+    <script type="text/javascript" src="js/pixi.min.js"></script>
+    <script type="text/javascript" src="js/pixi-display.js"></script>
+    <script type="text/javascript" src="js/raf.js"></script>
+    <script type="text/javascript" src="js/animate.js"></script>
+    <script type="text/javascript" src="js/scroller.js"></script>
+    <script type="text/javascript" src="js/tweenmax.min.js"></script>
+
+    <script type="text/javascript" src="js/main.js"></script>
+  </body>
+</html>
