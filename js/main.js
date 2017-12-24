@@ -131,7 +131,7 @@ SOLWAY.Loader = (function(){
   function loadProgressHandler(loader) {
     var percentage = loader.progress;
     var progressHeight = Math.ceil(192 * percentage / 100) + 'px';
-    loading.find('.container span').eq(1).css({'width': progressHeight, backgroundSize: progressHeight+' 45px'});
+    loading.find('.container span').eq(1).css({'width': progressHeight});
   }
 
   function setup() {
@@ -164,7 +164,7 @@ SOLWAY.Main = (function(){
     var scene9 = SOLWAY.Scene9.init();
 
     // scrollTo
-    // scroller.scrollTo(0, stagePosition(8))
+    scroller.scrollTo(0, stagePosition(0))
 
     // -- add scene
     container.addChild(scene1, scene2, scene3, scene4, scene5, scene6, scene7, scene8, scene9);
@@ -180,21 +180,34 @@ SOLWAY.Main = (function(){
 SOLWAY.Scene1 = (function(){
   var scene,
       logo,
+      logoText1,
+      logoText2,
+      logoText3,
+      logoText4,
+      logoText5,
       scene1Bg,
-      startButton;
+      button;
 
   function init() {
     scene = createContainer({ x: 0, y: 0 });
-    logo = createContainer({ x: 254, y: 69 });
+    logo = createContainer();
     bg = createSprite("scene-1-bg.jpg");
-    var logoText = createSprite("logo.png");
-    startButton = createSprite("btn-start.png", { x: 124, y: 210, interactive: true });
-    startButton.displayGroup = clickGroup;
+    button = createContainer({ x: 124, y: 210, interactive: true })
+    // button.displayGroup = clickGroup;
+
+    logoText1 = createSprite("logo-word-1.png", { x:270, y:69 });
+    logoText2 = createSprite("logo-word-2.png", { x:281, y:201 });
+    logoText3 = createSprite("logo-word-3.png", { x:281, y:337 });
+    logoText4 = createSprite("logo-word-4.png", { x:279, y:522 });
+    logoText5 = createSprite("logo-word-5.png", { x:254, y:653 });
+    var btnText = createSprite("btn-start.png", { x:2, y:13 });
+    var btnShadow = createSprite("btn-start-shadow.png", { x:0, y:0 });
 
     // add sprite to container
-    logo.addChild(logoText)
+    logo.addChild(logoText1, logoText2, logoText3, logoText4, logoText5)
+    button.addChild(btnShadow, btnText)
     // add containers to scene
-    scene.addChild(bg, logo, startButton)
+    scene.addChild(bg, logo, button)
     // animation
     anim()
     // bind events
@@ -204,13 +217,13 @@ SOLWAY.Scene1 = (function(){
   }
 
   function anim() {
-    TweenMax.fromTo(logo,0.5,{ alpha:0 },{ alpha: 1 });
-    TweenMax.fromTo(startButton,0.5,{ x:100, alpha:0 },{ x: 124,alpha:1 }).delay(.2);
+    TweenMax.staggerFrom([logoText1,logoText2,logoText3,logoText4,logoText5], 0.5, { alpha:0, x:'+=40', ease: Back.easeInOut }, 0.2);
+    TweenMax.from(button,0.5,{ x:'-=20', alpha:0 }).delay(1);
   }
 
   function bindEvents() {
-    startButton.on('pointertap', function() {
-      console.log('clicked')
+    button.on('pointertap', function() {
+      alert('start clicked')
     })
   }
 
@@ -274,7 +287,8 @@ SOLWAY.Scene3 = (function(){
       light,
       smoke,
       man,
-      text;
+      text,
+      hint;
 
   function init() {
     scene = createContainer({ x: 0, y: stagePosition(2) });
@@ -286,7 +300,9 @@ SOLWAY.Scene3 = (function(){
     light = createSprite("scene-3-light.png", { x:351, y:445 });
     smoke = createSprite("scene-3-smoke.png", { x:405, y:806 });
     text = createSprite("text-3-1.png", { x:96, y:304 });
-    man = createContainer({ x:4, y:739 });
+    man = createContainer({ x:4, y:739, interactive: true });
+    hint = createHintContainer({ x:282, y:631 })
+
     var body = createSprite("scene-3-body.png", { x:0, y:0 })
     var hand = createSprite("scene-3-hand.png", { x:230, y:0 })
     var drop = createSprite("scene-3-drop.png", { x:273, y:46 })
@@ -294,7 +310,7 @@ SOLWAY.Scene3 = (function(){
     // add sprite to container
     man.addChild(body, hand, drop)
     // add containers to scene
-    scene.addChild(bg, blackboard, light, equipment, chair,smoke, book, man, text)
+    scene.addChild(bg, blackboard, light, equipment, chair,smoke, book, man, text, hint)
     // animation
     anim()
     // bind events
@@ -304,9 +320,13 @@ SOLWAY.Scene3 = (function(){
   }
 
   function anim() {
+
   }
 
   function bindEvents() {
+    man.on("pointertap", function() {
+      showVideo('video source');
+    })
   }
 
   return {
@@ -331,7 +351,8 @@ SOLWAY.Scene4 = (function(){
       text_1,
       text_2,
       text_3,
-      text_4;
+      text_4,
+      hint;
 
   function init() {
     scene = createContainer({ x: 0, y: stagePosition(3) });
@@ -342,7 +363,7 @@ SOLWAY.Scene4 = (function(){
     door_opened = createSprite('scene-4-door-opened.png', { x: 35, y:521, alpha: 0 });
     factory = createSprite('scene-4-factory.png', { x: 8, y:256 });
     man_left = createSprite('scene-4-man-left.png', { x: 0, y:61 });
-    man_middle = createSprite('scene-4-man-middle.png', { x: 0, y:253 });
+    man_middle = createSprite('scene-4-man-middle.png', { x: 0, y:253, interactive: true });
     man_right = createSprite('scene-4-man-right.png', { x: 0, y:408 });
     men_1 = createSprite('scene-4-men-1.png', { x: 22, y:579 });
     men_2 = createSprite('scene-4-men-2.png', { x: 0, y:794 });
@@ -350,11 +371,12 @@ SOLWAY.Scene4 = (function(){
     text_2 = createSprite('text-4-2.png', { x: 372, y:0 });
     text_3 = createSprite('text-4-3.png', { x: 388, y:288 });
     text_4 = createSprite('text-4-4.png', { x: 200, y:549 });
+    hint = createHintContainer({ x:137, y:205 })
 
     // add sprite to container
     // man.addChild(body, hand, drop)
     // add containers to scene
-    scene.addChild(bg, clock_hour, clock_minute, factory, door_closed, door_opened, men_1, men_2, man_left, man_middle, man_right, text_1, text_2, text_3, text_4)
+    scene.addChild(bg, clock_hour, clock_minute, factory, door_closed, door_opened, men_1, men_2, man_left, man_middle, man_right, text_1, text_2, text_3, text_4, hint)
     // animation
     anim()
     // bind events
@@ -367,6 +389,9 @@ SOLWAY.Scene4 = (function(){
   }
 
   function bindEvents() {
+    man_middle.on('pointertap', function() {
+      showVideo('sad')
+    })
   }
 
   return {
@@ -381,18 +406,21 @@ SOLWAY.Scene5 = (function(){
       text,
       body,
       head,
-      hand;
+      hand,
+      hint;
 
   function init() {
     scene = createContainer({ x: 0, y: stagePosition(4) });
     bg = createSprite('scene-5-bg.jpg', { x:0, y:0 });
     text = createSprite('text-5-1.png', { x:456, y:334 });
-    body = createSprite('scene-5-body.png', { x:0, y:0 });
+    body = createSprite('scene-5-body.png', { x:0, y:0, interactive:true });
     head = createSprite('scene-5-head.png', { x:359, y:67 });
     hand = createSprite('scene-5-hand.png', { x:119, y:603 });
+    hint = createHintContainer({ x:225, y:340 })
+
     // add sprite to container
     // add containers to scene
-    scene.addChild(bg, body, head, hand, text);
+    scene.addChild(bg, body, head, hand, text, hint);
     // animation
     anim()
     // bind events
@@ -405,6 +433,9 @@ SOLWAY.Scene5 = (function(){
   }
 
   function bindEvents() {
+    body.on('pointertap', function() {
+      showVideo('asda')
+    })
   }
 
   return {
@@ -421,7 +452,8 @@ SOLWAY.Scene6 = (function(){
       hand_2,
       head_1,
       head_2,
-      photo;
+      photo,
+      hint;
 
   function init() {
     scene = createContainer({ x: 0, y: stagePosition(5) });
@@ -431,10 +463,11 @@ SOLWAY.Scene6 = (function(){
     hand_2 = createSprite('scene-6-hand-2.png', { x:247, y:880 });
     head_1 = createSprite('scene-6-head-1.png', { x:384, y:726 });
     head_2 = createSprite('scene-6-head-2.png', { x:314, y:1110 });
-    photo = createSprite('scene-6-photo.png', { x:95, y:3 });
+    photo = createSprite('scene-6-photo.png', { x:95, y:3, interactive:true });
+    hint = createHintContainer({ x:323, y:58 })
     // add sprite to container
     // add containers to scene
-    scene.addChild(bg, photo, blackboard, hand_1, hand_2, head_1, head_2);
+    scene.addChild(bg, photo, blackboard, hand_1, hand_2, head_1, head_2, hint);
     // animation
     anim()
     // bind events
@@ -447,6 +480,9 @@ SOLWAY.Scene6 = (function(){
   }
 
   function bindEvents() {
+    photo.on('pointertap', function() {
+      showVideo('asdds')
+    })
   }
 
   return {
@@ -464,22 +500,24 @@ SOLWAY.Scene7 = (function(){
       map,
       shanghai,
       text_1,
-      text_2;
+      text_2,
+      hint;
 
   function init() {
     scene = createContainer({ x: 0, y: stagePosition(6) });
     bg = createSprite('scene-7-bg.jpg', { x:0, y:0 });
     building = createSprite('scene-7-building.png', { x:15, y:853 });
     flag = createSprite('scene-7-flag.png', { x:0, y:572 });
-    map_building = createSprite('scene-7-map-building.png', { x:280, y:313 });
+    map_building = createSprite('scene-7-map-building.png', { x:280, y:313, interactive:true });
     map = createSprite('scene-7-map.png', { x:95, y:0 });
     shanghai = createSprite('scene-7-shanghai.png', { x:278, y:410 });
     text_1 = createSprite('text-7-1.png', { x:24, y:75 });
     text_2 = createSprite('text-7-2.png', { x:517, y:843 });
+    hint = createHintContainer({ x:320, y:184 })
 
     // add sprite to container
     // add containers to scene
-    scene.addChild(bg, map, map_building, shanghai, building, flag, text_1, text_2);
+    scene.addChild(bg, map, map_building, shanghai, building, flag, text_1, text_2, hint);
     // animation
     anim()
     // bind events
@@ -492,6 +530,9 @@ SOLWAY.Scene7 = (function(){
   }
 
   function bindEvents() {
+    map_building.on('pointerdown', function() {
+      showVideo('asds')
+    })
   }
 
   return {
@@ -511,36 +552,40 @@ SOLWAY.Scene8 = (function(){
       queen,
       sunny,
       text_1,
-      text_2;
+      text_2,
+      hint,
+      hint2;
 
   function init() {
     scene = createContainer({ x: 0, y: stagePosition(7) });
-    bg = createSprite('scene-8-bg.jpg', { x:0, y:0 })
-    dancer = createSprite('scene-8-dancer.png', { x:344, y:613 })
-    king_hand = createSprite('scene-8-king-hand.png', { x:84, y:978 })
-    king = createSprite('scene-8-king.png', { x:0, y:925 })
-    queen_hand = createSprite('scene-8-queen-hand.png', { x:61, y:1188 })
-    queen = createSprite('scene-8-queen.png', { x:0, y:1129 })
-    text_1 = createSprite('text-8-1.png', { x:74, y:372 })
-    text_2 = createSprite('text-8-2.png', { x:351, y:1910 })
-    sunny = createContainer({ x:0, y: 1595 })
-    var ship = createSprite('scene-8-sunshine.png', { x:0, y:0 })
-    var body = createSprite('scene-8-body.png', { x:0, y:108 })
-    var hand_1 = createSprite('scene-8-hand-1.png', { x:215, y:181 })
-    var hand_2 = createSprite('scene-8-hand-2.png', { x:435, y:860 })
-    var hand_3 = createSprite('scene-8-hand-3.png', { x:307, y:945 })
-    light = createContainer()
-    var light_1 = createSprite('scene-8-light-1.png', { x:0, y:63 })
-    var light_2 = createSprite('scene-8-light-2.png', { x:0, y:40 })
-    var light_3 = createSprite('scene-8-light-3.png', { x:0, y:627 })
-    var light_4 = createSprite('scene-8-light-4.png', { x:0, y:740 })
-    var light_5 = createSprite('scene-8-light-5.png', { x:0, y:1231 })
+    bg = createSprite('scene-8-bg.jpg', { x:0, y:0 });
+    dancer = createSprite('scene-8-dancer.png', { x:344, y:613 });
+    king_hand = createSprite('scene-8-king-hand.png', { x:84, y:978 });
+    king = createSprite('scene-8-king.png', { x:0, y:925 });
+    queen_hand = createSprite('scene-8-queen-hand.png', { x:61, y:1188 });
+    queen = createSprite('scene-8-queen.png', { x:0, y:1129 });
+    text_1 = createSprite('text-8-1.png', { x:74, y:372 });
+    text_2 = createSprite('text-8-2.png', { x:351, y:1910 });
+    sunny = createContainer({ x:0, y: 1595 });
+    var ship = createSprite('scene-8-sunshine.png', { x:0, y:0 });
+    var body = createSprite('scene-8-body.png', { x:0, y:108 });
+    var hand_1 = createSprite('scene-8-hand-1.png', { x:215, y:181 });
+    var hand_2 = createSprite('scene-8-hand-2.png', { x:435, y:860 });
+    var hand_3 = createSprite('scene-8-hand-3.png', { x:307, y:945 });
+    light = createContainer();
+    var light_1 = createSprite('scene-8-light-1.png', { x:0, y:63 });
+    var light_2 = createSprite('scene-8-light-2.png', { x:0, y:40 });
+    var light_3 = createSprite('scene-8-light-3.png', { x:0, y:627 });
+    var light_4 = createSprite('scene-8-light-4.png', { x:0, y:740 });
+    var light_5 = createSprite('scene-8-light-5.png', { x:0, y:1231 });
+    hint = createHintContainer({ x:218, y:887 })
+    hint2 = createHintContainer({ x:453, y:605 })
 
     // add sprite to container
     light.addChild(light_1, light_2, light_3, light_4, light_5)
-    sunny.addChild(ship, body, hand_1, hand_2, hand_3)
+    sunny.addChild(ship, body, hand_1, hand_2, hand_3, hint2)
     // add containers to scene
-    scene.addChild(bg, dancer, light, king, king_hand, queen, queen_hand, sunny, text_1, text_2);
+    scene.addChild(bg, dancer, light, king, king_hand, queen, queen_hand, sunny, text_1, text_2, hint);
     // animation
     anim()
     // bind events
@@ -553,6 +598,12 @@ SOLWAY.Scene8 = (function(){
   }
 
   function bindEvents() {
+    king.on('pointertap', function() {
+      showVideo('asdas')
+    })
+    sunny.on('pointertap', function() {
+      showVideo('asdas')
+    })
   }
 
   return {
@@ -566,18 +617,20 @@ SOLWAY.Scene9 = (function(){
       bg,
       banner,
       people,
-      text;
+      text,
+      hint;
 
   function init() {
     scene = createContainer({ x: 0, y: stagePosition(8) });
-    bg = createSprite('scene-9-bg.jpg', { x:0, y:0 })
-    banner = createSprite('scene-9-banner.png', { x:431, y:56 })
-    people = createSprite('scene-9-people.png', { x:0, y:194 })
-    text = createSprite('text-9-1.png', { x:582, y:792 })
+    bg = createSprite('scene-9-bg.jpg', { x:0, y:0 });
+    banner = createSprite('scene-9-banner.png', { x:431, y:56 });
+    people = createSprite('scene-9-people.png', { x:0, y:194 });
+    text = createSprite('text-9-1.png', { x:582, y:792 });
+    hint = createHintContainer({ x:464, y:35 })
 
     // add sprite to container
     // add containers to scene
-    scene.addChild(bg, banner, people, text);
+    scene.addChild(bg, banner, people, text, hint);
     // animation
     anim()
     // bind events
@@ -590,6 +643,9 @@ SOLWAY.Scene9 = (function(){
   }
 
   function bindEvents() {
+    banner.on('pointertap', function() {
+      showVideo('asdds')
+    })
   }
 
   return {
@@ -642,6 +698,24 @@ SOLWAY.Scroller = (function(container){
   }
 })()
 
+// -----------------视频实例----------------- //
+SOLWAY.Video = (function(){
+  // 帧动画
+  function show(src) {
+    console.log('show video', src);
+  }
+
+  function hide() {
+    console.log('hide video');
+  }
+
+  return {
+    show: show,
+    hide: hide
+  }
+})()
+
+// -----------------通用方法----------------- //
 SOLWAY.Utils = (function(){
   // 帧动画
   function createAnimatedSprite(name, num, opt, start) {
@@ -659,17 +733,32 @@ SOLWAY.Utils = (function(){
     return mc;
   }
   // create container
-  function createContainer(opt){
-    var container = new PIXI.Container();
+  function createContainer(opt) {
+    var _container = new PIXI.Container();
     if (opt) {
       _.forIn(opt, function(value, key) {
-          container[key] = value;
+          _container[key] = value;
       });
     }
-    return container;
+    return _container;
+  }
+  // create hint container
+  function createHintContainer(opt) {
+    var _container = new PIXI.Container();
+    var hint_hand = createSprite("hand.png", { x:54, y:43 });
+    var hint_bg = createSprite("hand-bg.png", { x:0, y:0 });
+    _container.addChild(hint_bg, hint_hand);
+    if (opt) {
+      _.forIn(opt, function(value, key) {
+          _container[key] = value;
+      });
+    }
+    // add animation
+    TweenMax.to(_container, 0.3,{ x:'+=10', y:'-=10', yoyo:true }).repeat(-1);
+    return _container;
   }
   // create sprite
-  function createSprite(name, opt){
+  function createSprite(name, opt) {
     var sprite = new PIXI.Sprite.fromImage(imgRoot + name);
     if (opt) {
       _.forIn(opt, function(value, key) {
@@ -700,6 +789,7 @@ SOLWAY.Utils = (function(){
   return {
     createAnimatedSprite: createAnimatedSprite,
     createContainer: createContainer,
+    createHintContainer: createHintContainer,
     createSprite: createSprite,
     fireOnce: fireOnce,
     stagePosition: stagePosition
@@ -713,11 +803,18 @@ $(function() {
     e.preventDefault();
   });
 
+  //
+  PIXI.AUTO_PREVENT_DEFAULT = false
+
   // Aliases
-  window.createContainer = SOLWAY.Utils.createContainer
-  window.createSprite = SOLWAY.Utils.createSprite
-  window.createAnimatedSprite = SOLWAY.Utils.createAnimatedSprite
-  window.stagePosition = SOLWAY.Utils.stagePosition
+  window.createContainer = SOLWAY.Utils.createContainer;
+  window.createHintContainer = SOLWAY.Utils.createHintContainer;
+  window.createSprite = SOLWAY.Utils.createSprite;
+  window.createAnimatedSprite = SOLWAY.Utils.createAnimatedSprite;
+  window.stagePosition = SOLWAY.Utils.stagePosition;
+
+  window.showVideo = SOLWAY.Video.show;
+  window.hideVideo = SOLWAY.Video.hide;
 
   // Loading载入
 	SOLWAY.Loader.init();

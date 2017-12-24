@@ -154,15 +154,12 @@ table {
   background: url('../images/loading-container.png') no-repeat;
 }
 .loading .container span:last-child {
-  -webkit-transition: all .2s;
-  transition: all .2s;
   position: absolute;
   top: 20px;
   width: 0;
   height: 45px;
   left: 7px;
-  background: url('../images/loading-progress.png') center right no-repeat;
-  background-size: 0 45px;
+  background: url('../images/loading-progress.png') left center no-repeat;
 }
 .loading .text {
   width: 55px;
