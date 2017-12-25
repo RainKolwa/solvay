@@ -1447,8 +1447,8 @@ $(function() {
       });
       wx.ready(function() {
         SOLWAY.Utils.setWechatShare({
-          title: "测试标题",
-          desc: "测试描述"
+          title: "索尔维传奇",
+          desc: "索尔维梦想中心正式启动"
         });
       });
     }
