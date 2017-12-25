@@ -311,11 +311,14 @@ SOLWAY.Scene[1] = (function() {
     scene = createContainer({ x: 0, y: stagePosition(1) });
     bg = createSprite("scene-2-bg.jpg");
     windows = createSprite("window.png", { x: 87, y: 0 });
-    text = createSprite("text-2-1.png", { x: 163, y: 104 });
+    text = createSprite("text-2-1.png", { x: 163, y: 104, alpha: 0 });
     family = createContainer({ x: 290, y: 73 });
     mother = createSprite("mother.png", { x: -10, y: -5 });
     father = createSprite("father.png", { x: -10, y: 81 });
     child = createSprite("child.png", { x: 28, y: 78 });
+
+    // reset state
+    text.x -= 20;
     child.x += 1 / 2 * child.width;
     child.y += 1 / 2 * child.height;
     child.anchor.set(0.5, 0.5);
@@ -339,13 +342,21 @@ SOLWAY.Scene[1] = (function() {
     });
   }
 
+  function customAnim() {
+    TweenMax.to(text, 0.4, {
+      x: "+=20",
+      alpha: 1
+    });
+  }
+
   function bindEvents() {
     TweenMax.from(text, 0.6, { x: "-=20", alpha: 0 });
   }
 
   return {
     init: init,
-    anim: anim
+    anim: anim,
+    customAnim: customAnim
   };
 })();
 
@@ -374,7 +385,7 @@ SOLWAY.Scene[2] = (function() {
     equipment = createSprite("scene-3-equipment.png", { x: 3, y: 504 });
     light = createSprite("scene-3-light.png", { x: 351, y: 445 });
     smoke = createSprite("scene-3-smoke.png", { x: 405, y: 806 });
-    text = createSprite("text-3-1.png", { x: 96, y: 304 });
+    text = createSprite("text-3-1.png", { x: 96, y: 304, alpha: 0 });
     man = createContainer({ x: 4, y: 739, interactive: true });
     hint = createHintContainer({ x: 282, y: 631 });
 
@@ -386,6 +397,9 @@ SOLWAY.Scene[2] = (function() {
       scaleY: 0,
       alpha: 0
     });
+
+    // reset state
+    text.x -= 20;
 
     // add sprite to container
     man.addChild(body, hand, drop);
@@ -409,7 +423,6 @@ SOLWAY.Scene[2] = (function() {
   }
 
   function anim() {
-    TweenMax.from(text, 0.6, { x: "-=20", alpha: 0, delay: 1 });
     TweenMax.to(hand, 1, {
       rotation: 5 * Math.PI / 180,
       repeat: -1,
@@ -431,6 +444,13 @@ SOLWAY.Scene[2] = (function() {
     });
   }
 
+  function customAnim() {
+    TweenMax.to(text, 0.4, {
+      x: "+=20",
+      alpha: 1
+    });
+  }
+
   function bindEvents() {
     man.on("pointertap", function() {
       showVideo("video source");
@@ -439,7 +459,8 @@ SOLWAY.Scene[2] = (function() {
 
   return {
     init: init,
-    anim: anim
+    anim: anim,
+    customAnim: customAnim
   };
 })();
 
@@ -614,7 +635,7 @@ SOLWAY.Scene[4] = (function() {
   function init() {
     scene = createContainer({ x: 0, y: stagePosition(4) });
     bg = createSprite("scene-5-bg.jpg", { x: 0, y: 0 });
-    text = createSprite("text-5-1.png", { x: 456, y: 334 });
+    text = createSprite("text-5-1.png", { x: 456, y: 334, alpha: 0 });
     body = createSprite("scene-5-body.png", { x: 0, y: 0, interactive: true });
     head = createSprite("scene-5-head.png", { x: 359, y: 67 });
     head.x += 1 / 2 * head.width;
@@ -625,6 +646,9 @@ SOLWAY.Scene[4] = (function() {
     hand.y += 1 * hand.height;
     hand.anchor.set(1, 1);
     hint = createHintContainer({ x: 225, y: 340 });
+
+    // reset state
+    text.x -= 20;
 
     // add sprite to container
     // add containers to scene
@@ -648,6 +672,13 @@ SOLWAY.Scene[4] = (function() {
     });
   }
 
+  function customAnim() {
+    TweenMax.to(text, 0.4, {
+      x: "+=20",
+      alpha: 1
+    });
+  }
+
   function bindEvents() {
     body.on("pointertap", function() {
       showVideo("asda");
@@ -656,13 +687,24 @@ SOLWAY.Scene[4] = (function() {
 
   return {
     init: init,
-    anim: anim
+    anim: anim,
+    customAnim: customAnim
   };
 })();
 
 // -----------------场景6----------------- //
 SOLWAY.Scene[5] = (function() {
-  var scene, bg, blackboard, hand_1, hand_2, head_1, head_2, photo, hint;
+  var scene,
+    bg,
+    blackboard,
+    hand_1,
+    hand_2,
+    head_1,
+    head_2,
+    photo,
+    hint,
+    text_1,
+    text_2;
 
   function init() {
     scene = createContainer({ x: 0, y: stagePosition(5) });
@@ -678,6 +720,12 @@ SOLWAY.Scene[5] = (function() {
       interactive: true
     });
     hint = createHintContainer({ x: 323, y: 58 });
+    text_1 = createSprite("text-6-1.png", { x: 550, y: 68, alpha: 0 });
+    text_2 = createSprite("text-6-2.png", { x: 436, y: 757, alpha: 0 });
+
+    // reset state
+    text_1.x -= 20;
+    text_2.x -= 20;
     hand_1.x += 1 * hand_1.width;
     hand_1.y += 1 * hand_1.height;
     hand_1.anchor.set(1);
@@ -692,7 +740,18 @@ SOLWAY.Scene[5] = (function() {
     head_2.anchor.set(0, 1);
     // add sprite to container
     // add containers to scene
-    scene.addChild(bg, photo, blackboard, hand_1, hand_2, head_1, head_2, hint);
+    scene.addChild(
+      bg,
+      photo,
+      blackboard,
+      hand_1,
+      hand_2,
+      head_1,
+      head_2,
+      text_1,
+      text_2,
+      hint
+    );
     // bind events
     bindEvents();
     // return scene
@@ -722,6 +781,18 @@ SOLWAY.Scene[5] = (function() {
     });
   }
 
+  function customAnim() {
+    TweenMax.to(text_1, 0.4, {
+      x: "+=20",
+      alpha: 1
+    });
+    TweenMax.to(text_2, 0.4, {
+      x: "+=20",
+      alpha: 1,
+      delay: 1
+    });
+  }
+
   function bindEvents() {
     photo.on("pointertap", function() {
       showVideo("asdds");
@@ -730,7 +801,8 @@ SOLWAY.Scene[5] = (function() {
 
   return {
     init: init,
-    anim: anim
+    anim: anim,
+    customAnim: customAnim
   };
 })();
 
@@ -759,8 +831,8 @@ SOLWAY.Scene[6] = (function() {
     });
     map = createSprite("scene-7-map.png", { x: 95, y: 0 });
     shanghai = createSprite("scene-7-shanghai.png", { x: 278, y: 410 });
-    text_1 = createSprite("text-7-1.png", { x: 24, y: 75 });
-    text_2 = createSprite("text-7-2.png", { x: 517, y: 843 });
+    text_1 = createSprite("text-7-1.png", { x: 24, y: 75, alpha: 0 });
+    text_2 = createSprite("text-7-2.png", { x: 517, y: 843, alpha: 0 });
     hint = createHintContainer({ x: 320, y: 184 });
 
     // reset state
@@ -773,6 +845,8 @@ SOLWAY.Scene[6] = (function() {
     shanghai.alpha = 0;
     shanghai.scale.x = 0;
     shanghai.scale.y = 0;
+    text_1.x -= 20;
+    text_2.x -= 20;
 
     // add sprite to container
     // add containers to scene
@@ -810,6 +884,15 @@ SOLWAY.Scene[6] = (function() {
     TweenMax.to(shanghai, 0.5, {
       alpha: 1,
       ease: Elastic.easeOut
+    });
+    TweenMax.to(text_1, 0.4, {
+      x: "+=20",
+      alpha: 1
+    });
+    TweenMax.to(text_2, 0.4, {
+      x: "+=20",
+      alpha: 1,
+      delay: 1
     });
   }
 
@@ -855,12 +938,16 @@ SOLWAY.Scene[7] = (function() {
     bg = createSprite("scene-8-bg.jpg", { x: 0, y: 0 });
     dancer = createSprite("scene-8-dancer.png", { x: 344, y: 613 });
     king_hand = createSprite("scene-8-king-hand.png", { x: 84, y: 978 });
-    king = createSprite("scene-8-king.png", { x: 0, y: 925 });
+    king = createSprite("scene-8-king.png", {
+      x: 0,
+      y: 925,
+      interactive: true
+    });
     queen_hand = createSprite("scene-8-queen-hand.png", { x: 61, y: 1188 });
     queen = createSprite("scene-8-queen.png", { x: 0, y: 1129 });
-    text_1 = createSprite("text-8-1.png", { x: 74, y: 372 });
-    text_2 = createSprite("text-8-2.png", { x: 351, y: 1910 });
-    sunny = createContainer({ x: 0, y: 1595 });
+    text_1 = createSprite("text-8-1.png", { x: 74, y: 372, alpha: 0 });
+    text_2 = createSprite("text-8-2.png", { x: 351, y: 1910, alpha: 0 });
+    sunny = createContainer({ x: 0, y: 1595, interactive: true });
     var ship = createSprite("scene-8-sunshine.png", { x: 0, y: 0 });
     var body = createSprite("scene-8-body.png", { x: 0, y: 108 });
     hand_1 = createSprite("scene-8-hand-1.png", { x: 215, y: 181 });
@@ -887,6 +974,8 @@ SOLWAY.Scene[7] = (function() {
     queen_hand.x += 0 * queen_hand.width;
     queen_hand.y += 1 * queen_hand.height;
     queen_hand.anchor.set(0, 1);
+    text_1.x -= 20;
+    text_2.x -= 20;
 
     // add sprite to container
     light.addChild(light_1, light_2, light_3, light_4, light_5);
@@ -945,6 +1034,18 @@ SOLWAY.Scene[7] = (function() {
     });
   }
 
+  function customAnim() {
+    TweenMax.to(text_1, 0.4, {
+      x: "+=20",
+      alpha: 1
+    });
+    TweenMax.to(text_2, 0.4, {
+      x: "+=20",
+      alpha: 1,
+      delay: 2
+    });
+  }
+
   function bindEvents() {
     king.on("pointertap", function() {
       showVideo("asdas");
@@ -956,7 +1057,8 @@ SOLWAY.Scene[7] = (function() {
 
   return {
     init: init,
-    anim: anim
+    anim: anim,
+    customAnim: customAnim
   };
 })();
 
@@ -967,9 +1069,13 @@ SOLWAY.Scene[8] = (function() {
   function init() {
     scene = createContainer({ x: 0, y: stagePosition(8) });
     bg = createSprite("scene-9-bg.jpg", { x: 0, y: 0 });
-    banner = createSprite("scene-9-banner.png", { x: 431, y: 56 });
+    banner = createSprite("scene-9-banner.png", {
+      x: 431,
+      y: 56,
+      interactive: true
+    });
     people = createSprite("scene-9-people.png", { x: 0, y: 194 });
-    text = createSprite("text-9-1.png", { x: 582, y: 792 });
+    text = createSprite("text-9-1.png", { x: 582, y: 792, alpha: 0 });
     hint = createHintContainer({ x: 464, y: 35 });
 
     // reset state
@@ -978,6 +1084,7 @@ SOLWAY.Scene[8] = (function() {
     banner.anchor.set(0.5);
     banner.scale.x = 0;
     banner.scale.y = 0;
+    text.x -= 20;
 
     // add sprite to container
     // add containers to scene
@@ -995,6 +1102,10 @@ SOLWAY.Scene[8] = (function() {
       x: 1,
       y: 1,
       ease: Back.easeOut
+    });
+    TweenMax.to(text, 0.4, {
+      x: "+=20",
+      alpha: 1
     });
   }
 
@@ -1017,29 +1128,20 @@ SOLWAY.Scroller = (function(container) {
     scroller = new Scroller(
       function(left, top, zoom) {
         container.y = -top;
-        // 通用入场
-        for (var i = 1; i < stages.length - 1; i++) {
+
+        for (var i = 1; i < stages.length; i++) {
+          // 通用入场
           if (top > stagePosition(i) - 1040) {
             fireOnce("scene" + i, function() {
-              SOLWAY.Scene[i].anim();
+              SOLWAY.Scene[i].anim && SOLWAY.Scene[i].anim();
             });
           }
-        }
-        // 定制入场
-        if (top > stagePosition(3) - 1040 + 600) {
-          fireOnce("scene3_custom", function() {
-            SOLWAY.Scene[3].customAnim();
-          });
-        }
-        if (top > stagePosition(6) - 1040 + 500) {
-          fireOnce("scene6_custom", function() {
-            SOLWAY.Scene[6].customAnim();
-          });
-        }
-        if (top > stagePosition(8) - 1040 + 500) {
-          fireOnce("scene8_custom", function() {
-            SOLWAY.Scene[8].customAnim();
-          });
+          // 定制入场
+          if (top > stagePosition(i) - 1040 + 500) {
+            fireOnce("scene" + i + "_custom", function() {
+              SOLWAY.Scene[i].customAnim && SOLWAY.Scene[i].customAnim();
+            });
+          }
         }
       },
       {
@@ -1121,15 +1223,12 @@ SOLWAY.Video = (function() {
     if (scrolling) {
       return;
     }
-    // video.addClass("active");
     tl.play();
-    // console.log("show video", src);
+    console.log("show video", src);
   }
 
   function hide() {
     tl.reverse();
-    // video.removeClass("active");
-    console.log("hide video");
     if (video.find("video")) {
       video.find("video").attr("src", "");
     }
