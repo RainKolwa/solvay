@@ -117,12 +117,15 @@ blockquote:before,
 q:before,
 blockquote:after,
 q:after {
-  content: '';
+  content: "";
   content: none;
 }
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 .loading {
   position: fixed;
@@ -151,7 +154,7 @@ table {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: url('../images/loading-container.png') no-repeat;
+  background: url("../images/loading-container.png") no-repeat;
 }
 .loading .container span:last-child {
   position: absolute;
@@ -159,12 +162,52 @@ table {
   width: 0;
   height: 45px;
   left: 7px;
-  background: url('../images/loading-progress.png') left center no-repeat;
+  background: url("../images/loading-progress.png") left center no-repeat;
 }
 .loading .text {
   width: 55px;
   height: 253px;
-  background: url('../images/loading-txt.png') no-repeat;
+  background: url("../images/loading-txt.png") no-repeat;
+}
+#bgmusic {
+  position: fixed;
+  left: -1000%;
+  top: -100%;
+}
+.switcher {
+  position: fixed;
+  width: 118px;
+  height: 121px;
+  right: 20px;
+  top: 900px;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  background: url("../images/play.png") no-repeat;
+  -webkit-animation: scaleAnim 1s ease-in-out infinite;
+          animation: scaleAnim 1s ease-in-out infinite;
+}
+.switcher.pause {
+  background: url("../images/pause.png") no-repeat;
+}
+@-webkit-keyframes scaleAnim {
+  0% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+  100% {
+    transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+  }
+}
+@keyframes scaleAnim {
+  0% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+  100% {
+    transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+  }
 }
 .main {
   width: 640px;

@@ -117,10 +117,13 @@ blockquote:before,
 q:before,
 blockquote:after,
 q:after {
-  content: '';
+  content: "";
   content: none;
 }
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+* {
+  -webkit-tap-highlight-color: transparent;
 }

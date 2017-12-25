@@ -286,12 +286,12 @@ SOLWAY.Scene[0] = (function() {
   }
 
   function actionMv() {
+    SOLWAY.Scroller.init(container);
     scroller.scrollTo(0, stagePosition(1) - 200);
   }
 
   function bindEvents() {
     button.on("pointertap", function() {
-      SOLWAY.Scroller.init(container);
       SOLWAY.Curtain.anim(actionMv);
     });
   }
@@ -1110,6 +1110,69 @@ SOLWAY.Video = (function() {
   };
 })();
 
+// -----------------BGM实例----------------- //
+SOLWAY.BGM = (function() {
+  var audio = document.getElementById("bgmusic"),
+    switcher = $(".switcher");
+
+  function init() {
+    bindEvents();
+  }
+
+  function play() {
+    audio && audio.play();
+  }
+
+  function pause() {
+    audio && audio.pause();
+  }
+
+  function autoPlay(id) {
+    var play = function() {
+      audio.play();
+      document.removeEventListener("touchstart", play, false);
+    };
+    audio.play();
+    document.addEventListener("touchstart", play, false);
+  }
+
+  function bindEvents() {
+    // click event
+    switcher.on("click", function(e) {
+      e.preventDefault();
+      if ($(this).hasClass("pause")) {
+        pause();
+      } else {
+        play();
+      }
+      $(this).toggleClass("pause");
+    });
+
+    // autoplay hack
+    document.addEventListener(
+      "WeixinJSBridgeReady",
+      function() {
+        SOLWAY.BGM.autoPlay("bgmusic");
+      },
+      false
+    );
+    document.addEventListener(
+      "YixinJSBridgeReady",
+      function() {
+        SOLWAY.BGM.autoPlay("bgmusic");
+      },
+      false
+    );
+  }
+
+  return {
+    init: init,
+    play: play,
+    pause: pause,
+    autoPlay: autoPlay
+  };
+})();
+
 // -----------------通用方法----------------- //
 SOLWAY.Utils = (function() {
   // 帧动画
@@ -1270,4 +1333,7 @@ $(function() {
 
   // Loading载入
   SOLWAY.Loader.init();
+
+  // auto play in wechat
+  SOLWAY.BGM.init();
 });
