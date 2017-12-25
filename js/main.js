@@ -98,6 +98,8 @@ var clickGroup; // 可点击层
 var stages = [1101, 575, 1185, 1270, 1118, 1329, 2040, 3150, 1330]; // 场景节点
 
 var imgRoot = "../images/";
+var apiRoot = "http://solvay.uice.lu/";
+var shareImg = apiRoot + 'images/share.jpg';
 
 SOLWAY.Loader = (function() {
   var loading = $(".loading");
@@ -163,7 +165,7 @@ SOLWAY.Main = (function() {
     SOLWAY.Scroller.init(container);
 
     // scrollTo
-    // scroller.scrollTo(0, stagePosition(7));
+    scroller.scrollTo(0, stagePosition(1));
 
     // -- add scene
     // container.addChild(scene1, scene2, scene3, scene4, scene5, scene6, scene7, scene8, scene9);
@@ -263,7 +265,6 @@ SOLWAY.Scene[1] = (function() {
   }
 
   function anim() {
-    TweenMax.from(text, 0.6, { x: "-=20", alpha: 0, delay: 1 });
     TweenMax.from(child, 1, {
       rotation: 5 * Math.PI / 180,
       repeat: -1,
@@ -272,7 +273,9 @@ SOLWAY.Scene[1] = (function() {
     });
   }
 
-  function bindEvents() {}
+  function bindEvents() {
+    TweenMax.from(text, 0.6, { x: "-=20", alpha: 0 });
+  }
 
   return {
     init: init,
@@ -1033,6 +1036,38 @@ SOLWAY.Utils = (function() {
     });
     return h;
   }
+  //export
+  function setWechatShare(data) {
+    var title = data.title;
+    var desc = data.desc;
+    var imgUrl = shareImg;
+    var link = window.location.href;
+
+    wx.onMenuShareTimeline({
+      title: title,
+      link: link,
+      imgUrl: imgUrl,
+      success: function() {
+        // 用户确认分享后执行的回调函数
+      },
+      cancel: function() {
+        // 用户取消分享后执行的回调函数
+      }
+    });
+    wx.onMenuShareAppMessage({
+      title: title,
+      desc: desc,
+      link: link,
+      imgUrl: imgUrl,
+      success: function() {
+        // 用户确认分享后执行的回调函数
+      },
+      cancel: function() {
+        // 用户取消分享后执行的回调函数
+      }
+    });
+  }
+
 
   return {
     createAnimatedSprite: createAnimatedSprite,
@@ -1040,12 +1075,35 @@ SOLWAY.Utils = (function() {
     createHintContainer: createHintContainer,
     createSprite: createSprite,
     fireOnce: fireOnce,
-    stagePosition: stagePosition
+    stagePosition: stagePosition,
+    setWechatShare: setWechatShare
   };
 })();
 
 // 启动
 $(function() {
+  // wechat config
+  $.ajax({
+    url: 'http://solvay.uice.lu/jsapi_args.php',
+    method: 'get',
+    success: function(res) {
+      wx.config({
+        debug: true,
+        appId: res.appId,
+        timestamp: res.timestamp,
+        nonceStr: res.nonceStr,
+        signature: res.signature,
+        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage']
+      });
+      wx.ready(function() {
+        SOLWAY.Utils.setWechatShare({
+          title: '测试标题',
+          desc: '测试描述'
+        });
+      });
+    }
+  })
+
   // 阻止默认触摸事件
   $(document).bind("touchmove", function(e) {
     e.preventDefault();
@@ -1067,4 +1125,6 @@ $(function() {
 
   // Loading载入
   SOLWAY.Loader.init();
+
+
 });
