@@ -99,7 +99,7 @@ var stages = [1101, 575, 1185, 1270, 1118, 1329, 2040, 3150, 1330]; // 场景节
 
 var imgRoot = "../images/";
 var apiRoot = "http://solvay.uice.lu/";
-var shareImg = apiRoot + 'images/share.jpg';
+var shareImg = apiRoot + "images/share.jpg";
 
 SOLWAY.Loader = (function() {
   var loading = $(".loading");
@@ -162,10 +162,13 @@ SOLWAY.Main = (function() {
       container.addChild(s);
     }
 
-    SOLWAY.Scroller.init(container);
+    var curtain = SOLWAY.Curtain.init();
+    container.addChild(curtain);
+
+    // SOLWAY.Scroller.init(container);
 
     // scrollTo
-    scroller.scrollTo(0, stagePosition(3));
+    // scroller.scrollTo(0, stagePosition(3));
 
     // -- add scene
     // container.addChild(scene1, scene2, scene3, scene4, scene5, scene6, scene7, scene8, scene9);
@@ -174,6 +177,61 @@ SOLWAY.Main = (function() {
 
   return {
     init: init
+  };
+})();
+
+// -----------------转场动画----------------- //
+SOLWAY.Curtain = (function() {
+  var scene, cloud, cloud_mini, bottle_left, bottle_right, tl;
+
+  function init() {
+    scene = createContainer({ x: 0, y: 0 });
+    cloud = createSprite("curtain-cloud.png", { x: 308, y: 0, alpha: 0 });
+    cloud_mini = createSprite("curtain-cloud-mini.png", {
+      x: 139,
+      y: 223,
+      alpha: 0
+    });
+    bottle_left = createSprite("curtain-bottle-left.png", {
+      x: 0,
+      y: 0,
+      alpha: 0
+    });
+    bottle_right = createSprite("curtain-bottle-right.png", {
+      x: 0,
+      y: 381,
+      alpha: 0
+    });
+
+    // reset state
+    bottle_left.y -= 100;
+    bottle_right.y += 100;
+    cloud.x += 332;
+    cloud.y += 413;
+    cloud.pivot.set(332, 413);
+
+    // add containers to scene
+    scene.addChild(cloud_mini, bottle_left, bottle_right, cloud);
+    // return scene
+    return scene;
+  }
+
+  function anim(cb) {
+    tl = new TimelineLite();
+    tl.to(bottle_left, 0.5, { y: "+=100", alpha: 1 });
+    tl.to(bottle_right, 0.5, { y: "-=100", alpha: 1 }, "-=0.5");
+    tl.to(cloud_mini, 1, { alpha: 1 });
+    tl.to(cloud, 1, { alpha: 1 }, "-=.5");
+    tl.to(cloud.scale, 1, { x: 3, y: 3, onComplete: cb }, "-=1");
+    tl.to(cloud, 1, { alpha: 0 });
+    tl.to(bottle_left, 1, { alpha: 0 }, "-=1");
+    tl.to(bottle_right, 1, { alpha: 0 }, "-=1");
+    tl.to(cloud_mini, 1, { alpha: 0 }, "-=1");
+  }
+
+  return {
+    init: init,
+    anim: anim
   };
 })();
 
@@ -209,6 +267,8 @@ SOLWAY.Scene[0] = (function() {
     button.addChild(btnShadow, btnText);
     // add containers to scene
     scene.addChild(bg, logo, button);
+    // animation
+    anim();
     // bind events
     bindEvents();
     // return scene
@@ -225,9 +285,14 @@ SOLWAY.Scene[0] = (function() {
     TweenMax.from(button, 0.5, { x: "-=20", alpha: 0 }).delay(1);
   }
 
+  function actionMv() {
+    scroller.scrollTo(0, stagePosition(1) - 200);
+  }
+
   function bindEvents() {
     button.on("pointertap", function() {
-      alert("start clicked");
+      SOLWAY.Scroller.init(container);
+      SOLWAY.Curtain.anim(actionMv);
     });
   }
 
@@ -409,29 +474,34 @@ SOLWAY.Scene[3] = (function() {
       alpha: 0
     });
     factory = createSprite("scene-4-factory.png", { x: 8, y: 256 });
-    man_left = createSprite("scene-4-man-left.png", { x: 0, y: 61, alpha:0 });
+    man_left = createSprite("scene-4-man-left.png", { x: 0, y: 61, alpha: 0 });
     man_middle = createSprite("scene-4-man-middle.png", {
       x: 0,
       y: 253,
-      interactive: true, alpha:0
+      interactive: true,
+      alpha: 0
     });
-    man_right = createSprite("scene-4-man-right.png", { x: 0, y: 408, alpha:0 });
-    men_1 = createSprite("scene-4-men-1.png", { x: 22, y: 579, alpha:0 });
-    men_2 = createSprite("scene-4-men-2.png", { x: 0, y: 794, alpha:0 });
-    text_1 = createSprite("text-4-1.png", { x: 473, y: 531, alpha:0 });
-    text_2 = createSprite("text-4-2.png", { x: 372, y: 0, alpha:0 });
-    text_3 = createSprite("text-4-3.png", { x: 388, y: 288, alpha:0 });
-    text_4 = createSprite("text-4-4.png", { x: 200, y: 549, alpha:0 });
-    hint = createHintContainer({ x: 137, y: 205, alpha:0 });
+    man_right = createSprite("scene-4-man-right.png", {
+      x: 0,
+      y: 408,
+      alpha: 0
+    });
+    men_1 = createSprite("scene-4-men-1.png", { x: 22, y: 579, alpha: 0 });
+    men_2 = createSprite("scene-4-men-2.png", { x: 0, y: 794, alpha: 0 });
+    text_1 = createSprite("text-4-1.png", { x: 473, y: 531, alpha: 0 });
+    text_2 = createSprite("text-4-2.png", { x: 372, y: 0, alpha: 0 });
+    text_3 = createSprite("text-4-3.png", { x: 388, y: 288, alpha: 0 });
+    text_4 = createSprite("text-4-4.png", { x: 200, y: 549, alpha: 0 });
+    hint = createHintContainer({ x: 137, y: 205, alpha: 0 });
 
     // reset state
-    text_1.x -=10;
-    text_2.x -=10;
-    text_3.x -=10;
-    text_4.x -=10;
-    man_left.y -=10;
-    man_middle.y -=10;
-    man_right.y -=10;
+    text_1.x -= 10;
+    text_2.x -= 10;
+    text_3.x -= 10;
+    text_4.x -= 10;
+    man_left.y -= 10;
+    man_middle.y -= 10;
+    man_right.y -= 10;
     clock_hour.x += 230;
     clock_hour.y += 41;
     clock_hour.pivot.set(230, 41);
@@ -477,45 +547,50 @@ SOLWAY.Scene[3] = (function() {
       rotation: 240 * Math.PI / 180 + 120 * Math.PI / 180,
       ease: Linear.easeNone
     });
-    tl.to(text_1, .2, {
-      x: '+=20',
+    tl.to(text_1, 0.2, {
+      x: "+=20",
       alpha: 1
-    })
-    tl.to(clock_minute, 5, {
-      rotation: 360 * 8 * Math.PI / 180 + 55 * Math.PI / 180,
-      ease: Linear.easeNone
-    }, "-=5");
-    tl.to(door_closed, .2, { alpha: 0 });
-    tl.to(door_opened, .2, { alpha: 1 });
-    tl.to(men_2, .2, { alpha: 1 });
-    tl.to(men_1, .2, { alpha: 1 });
-    tl.to(man_left, .2, {
-      y: '+=10',
+    });
+    tl.to(
+      clock_minute,
+      5,
+      {
+        rotation: 360 * 8 * Math.PI / 180 + 55 * Math.PI / 180,
+        ease: Linear.easeNone
+      },
+      "-=5"
+    );
+    tl.to(door_closed, 0.2, { alpha: 0 });
+    tl.to(door_opened, 0.2, { alpha: 1 });
+    tl.to(men_2, 0.2, { alpha: 1 });
+    tl.to(men_1, 0.2, { alpha: 1 });
+    tl.to(man_left, 0.2, {
+      y: "+=10",
       alpha: 1
-    })
-    tl.to(text_2, .2, {
-      x: '+=20',
+    });
+    tl.to(text_2, 0.2, {
+      x: "+=20",
       alpha: 1
-    })
-    tl.to(man_middle, .2, {
-      y: '+=10',
+    });
+    tl.to(man_middle, 0.2, {
+      y: "+=10",
       alpha: 1
-    })
-    tl.to(text_3, .2, {
-      x: '+=20',
+    });
+    tl.to(text_3, 0.2, {
+      x: "+=20",
       alpha: 1
-    })
-    tl.to(man_right, .2, {
-      y: '+=10',
+    });
+    tl.to(man_right, 0.2, {
+      y: "+=10",
       alpha: 1
-    })
-    tl.to(text_4, .2, {
-      x: '+=20',
+    });
+    tl.to(text_4, 0.2, {
+      x: "+=20",
       alpha: 1
-    })
-    tl.to(hint, .2, {
+    });
+    tl.to(hint, 0.2, {
       alpha: 1
-    })
+    });
   }
 
   function bindEvents() {
@@ -941,7 +1016,7 @@ SOLWAY.Scroller = (function(container) {
       function(left, top, zoom) {
         container.y = -top;
         // 通用入场
-        for (var i = 0; i < stages.length - 1; i++) {
+        for (var i = 1; i < stages.length - 1; i++) {
           if (top > stagePosition(i) - 1040) {
             fireOnce("scene" + i, function() {
               SOLWAY.Scene[i].anim();
@@ -1139,7 +1214,6 @@ SOLWAY.Utils = (function() {
     });
   }
 
-
   return {
     createAnimatedSprite: createAnimatedSprite,
     createContainer: createContainer,
@@ -1155,8 +1229,8 @@ SOLWAY.Utils = (function() {
 $(function() {
   // wechat config
   $.ajax({
-    url: 'http://solvay.uice.lu/jsapi_args.php',
-    method: 'get',
+    url: "http://solvay.uice.lu/jsapi_args.php",
+    method: "get",
     success: function(res) {
       wx.config({
         debug: false,
@@ -1164,16 +1238,16 @@ $(function() {
         timestamp: res.timestamp,
         nonceStr: res.nonceStr,
         signature: res.signature,
-        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage']
+        jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"]
       });
       wx.ready(function() {
         SOLWAY.Utils.setWechatShare({
-          title: '测试标题',
-          desc: '测试描述'
+          title: "测试标题",
+          desc: "测试描述"
         });
       });
     }
-  })
+  });
 
   // 阻止默认触摸事件
   $(document).bind("touchmove", function(e) {
@@ -1196,6 +1270,4 @@ $(function() {
 
   // Loading载入
   SOLWAY.Loader.init();
-
-
 });
