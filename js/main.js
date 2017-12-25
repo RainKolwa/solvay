@@ -100,7 +100,7 @@ var scrolling = false; // 是否在滚动状态
 
 var imgRoot = "../images/";
 var apiRoot = "http://solvay.uice.lu/";
-var shareImg = apiRoot + "images/share.jpg";
+var shareImg = apiRoot + "images/share.jpg?v=1";
 
 SOLWAY.Loader = (function() {
   var loading = $(".loading");
