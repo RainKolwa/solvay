@@ -96,6 +96,7 @@ var scroller; // 滚动模块
 var firedEvents = []; // 记录场景进度
 var clickGroup; // 可点击层
 var stages = [1101, 575, 1185, 1270, 1118, 1329, 2040, 3150, 1330]; // 场景节点
+var scrolling = false; // 是否在滚动状态
 
 var imgRoot = "../images/";
 var apiRoot = "http://solvay.uice.lu/";
@@ -992,7 +993,8 @@ SOLWAY.Scene[8] = (function() {
   function customAnim() {
     TweenMax.to(banner.scale, 0.5, {
       x: 1,
-      y: 1
+      y: 1,
+      ease: Back.easeOut
     });
   }
 
@@ -1071,6 +1073,7 @@ SOLWAY.Scroller = (function(container) {
         }
         scroller.doTouchMove(e.touches, e.timeStamp);
         mousedown = true;
+        scrolling = true;
       },
       false
     );
@@ -1083,6 +1086,7 @@ SOLWAY.Scroller = (function(container) {
         }
         scroller.doTouchEnd(e.timeStamp);
         mousedown = false;
+        scrolling = false;
       },
       false
     );
@@ -1095,16 +1099,50 @@ SOLWAY.Scroller = (function(container) {
 
 // -----------------视频实例----------------- //
 SOLWAY.Video = (function() {
-  // 帧动画
+  var video = $(".video-container"),
+    tl,
+    mask = video.find(".mask"),
+    closeBtn = video.find(".btn-close"),
+    videoBox = video.find(".video");
+
+  function init() {
+    // reset state
+    TweenLite.set(mask, { top: "100%", alpha: 0 });
+    TweenLite.set(videoBox, { scale: 0 });
+
+    // define timeline
+    tl = new TimelineLite({ paused: true });
+    tl.to(mask, 0.2, { top: 0, alpha: 1 });
+    tl.to(videoBox, 0.5, { scale: 1, ease: Back.easeOut });
+    bindEvents();
+  }
+
   function show(src) {
-    console.log("show video", src);
+    if (scrolling) {
+      return;
+    }
+    // video.addClass("active");
+    tl.play();
+    // console.log("show video", src);
   }
 
   function hide() {
+    tl.reverse();
+    // video.removeClass("active");
     console.log("hide video");
+    if (video.find("video")) {
+      video.find("video").attr("src", "");
+    }
+  }
+
+  function bindEvents() {
+    video.on("click", ".btn-close", function() {
+      hide();
+    });
   }
 
   return {
+    init: init,
     show: show,
     hide: hide
   };
@@ -1336,4 +1374,5 @@ $(function() {
 
   // auto play in wechat
   SOLWAY.BGM.init();
+  SOLWAY.Video.init();
 });

@@ -77,6 +77,54 @@
   overflow: hidden;
 }
 
+.video-container {
+  position: fixed;
+  left: 0;
+  top: 100%;
+  right: 0;
+  bottom: 0;
+  z-index: 12;
+  .mask {
+    position: fixed;
+    left: 0;
+    top: 100%;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+  }
+  .video {
+    position: absolute;
+    width: 480px *3/2;
+    height: 270px *3/2;
+    background: #c0c0c0;
+    left: 50%;
+    margin-left: -240px *3/2;
+    top: 50%;
+    margin-top: -240px *3;
+    transform: rotate(90deg);
+    transform-origin: center center;
+    display: flex;
+    justify: center;
+    align-items: center;
+  }
+  .btn-close {
+    width: 142px;
+    height: 139px;
+    background: url("../images/close.png") no-repeat;
+    position: absolute;
+    right: 0;
+    bottom: -130px;
+  }
+  p {
+    position: relative;
+    z-index: 2;
+    font-size: 24px;
+    color: white;
+    text-align: center;
+    width: 100%;
+  }
+}
+
 .lock {
   width: 100%;
   height: 100%;
