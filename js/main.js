@@ -207,14 +207,19 @@ SOLWAY.Curtain = (function() {
     // reset state
     bottle_left.y -= 100;
     bottle_right.y += 100;
-    cloud.x += 332;
-    cloud.y += 413;
+    cloud.x = 332 + 308;
+    cloud.y = 413;
     cloud.pivot.set(332, 413);
 
     // add containers to scene
     scene.addChild(cloud_mini, bottle_left, bottle_right, cloud);
     // return scene
     return scene;
+  }
+
+  function clearTl() {
+    tl.pause(0, true); //Go back to the start (true is to suppress events)
+    tl.remove();
   }
 
   function anim(cb) {
@@ -227,7 +232,7 @@ SOLWAY.Curtain = (function() {
     tl.to(cloud, 1, { alpha: 0 });
     tl.to(bottle_left, 1, { alpha: 0 }, "-=1");
     tl.to(bottle_right, 1, { alpha: 0 }, "-=1");
-    tl.to(cloud_mini, 1, { alpha: 0 }, "-=1");
+    tl.to(cloud_mini, 1, { alpha: 0, onComplete: clearTl }, "-=1");
   }
 
   return {
