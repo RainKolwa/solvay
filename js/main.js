@@ -95,7 +95,7 @@ var container; // 舞台容器
 var scroller; // 滚动模块
 var firedEvents = []; // 记录场景进度
 var clickGroup; // 可点击层
-var stages = [1101, 575, 1185, 1270, 1118, 1329, 2040, 3150, 1330]; // 场景节点
+var stages = [1355, 575, 1185, 1270, 1118, 1329, 2040, 3150, 1330]; // 场景节点
 var scrolling = false; // 是否在滚动状态
 var windowHeight = window.innerHeight;
 
@@ -187,7 +187,8 @@ SOLWAY.Curtain = (function() {
   var scene, cloud, cloud_mini, bottle_left, bottle_right, tl;
 
   function init() {
-    scene = createContainer({ x: 0, y: 81 });
+    var curtainY = 1 / 2 * windowHeight - 1 / 2 * 837;
+    scene = createContainer({ x: 0, y: curtainY });
     cloud = createSprite("curtain-cloud.png", { x: 308, y: 0, alpha: 0 });
     cloud_mini = createSprite("curtain-cloud-mini.png", {
       x: 139,
@@ -255,10 +256,12 @@ SOLWAY.Scene[0] = (function() {
     button;
 
   function init() {
+    var logoY = 1 / 2 * windowHeight - 1 / 2 * 742;
+    var buttonY = 1 / 2 * windowHeight - 1 / 2 * 387;
     scene = createContainer({ x: 0, y: 0 });
-    logo = createContainer({ x: 254, y: 140 });
+    logo = createContainer({ x: 254, y: logoY });
     bg = createSprite("scene-1-bg.jpg");
-    button = createContainer({ x: 124, y: 281, interactive: true });
+    button = createContainer({ x: 124, y: buttonY, interactive: true });
     // button.displayGroup = clickGroup;
 
     logoText1 = createSprite("logo-word-1.png", { x: 16, y: 0 });
