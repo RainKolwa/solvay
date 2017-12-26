@@ -287,16 +287,3 @@ table {
     display: block;
   }
 }
-/* for responsive ######################################################################################## responsive */
-@media (max-height: 980px) {
-  .scale {
-    -webkit-transform: scale(0.9);
-    transform: scale(0.9);
-  }
-}
-@media (max-height: 880px) {
-  .scale {
-    -webkit-transform: scale(0.8);
-    transform: scale(0.8);
-  }
-}

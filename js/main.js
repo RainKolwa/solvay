@@ -97,6 +97,7 @@ var firedEvents = []; // 记录场景进度
 var clickGroup; // 可点击层
 var stages = [1101, 575, 1185, 1270, 1118, 1329, 2040, 3150, 1330]; // 场景节点
 var scrolling = false; // 是否在滚动状态
+var windowHeight = window.innerHeight;
 
 var imgRoot = "../images/";
 var apiRoot = "http://solvay.uice.lu/";
@@ -108,7 +109,7 @@ SOLWAY.Loader = (function() {
 
   function init() {
     // init app
-    app = new PIXI.Application(640, 1040, {
+    app = new PIXI.Application(640, windowHeight, {
       transparent: true
     });
     main.append(app.view);
@@ -1136,13 +1137,13 @@ SOLWAY.Scroller = (function(container) {
 
         for (var i = 1; i < stages.length; i++) {
           // 通用入场
-          if (top > stagePosition(i) - 1040) {
+          if (top > stagePosition(i) - windowHeight) {
             fireOnce("scene" + i, function() {
               SOLWAY.Scene[i].anim && SOLWAY.Scene[i].anim();
             });
           }
           // 定制入场
-          if (top > stagePosition(i) - 1040 + 500) {
+          if (top > stagePosition(i) - windowHeight + 500) {
             fireOnce("scene" + i + "_custom", function() {
               SOLWAY.Scene[i].customAnim && SOLWAY.Scene[i].customAnim();
             });
@@ -1472,6 +1473,10 @@ $(function() {
 
   window.showVideo = SOLWAY.Video.show;
   window.hideVideo = SOLWAY.Video.hide;
+
+  // reset main container height and bgm button position
+  $(".main").height(windowHeight);
+  $(".switcher").css("top", windowHeight - 20 - 120 + "px");
 
   // Loading载入
   SOLWAY.Loader.init();
