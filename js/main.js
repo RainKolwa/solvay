@@ -45,8 +45,8 @@ var loaderAssets = [
   "scene-6-blackboard.png",
   "scene-6-hand-1.png",
   "scene-6-hand-2.png",
-  "scene-6-head-1.png",
-  "scene-6-head-2.png",
+  "scene-6-hand-3.png",
+  "scene-6-hand-4.png",
   "scene-6-photo.png",
   "scene-7-bg.jpg",
   "scene-7-building.png",
@@ -706,31 +706,31 @@ SOLWAY.Scene[5] = (function() {
   var scene,
     bg,
     blackboard,
-    hand_1,
-    hand_2,
-    head_1,
-    head_2,
     photo,
     hint,
     text_1,
-    text_2;
+    text_2,
+    hand_1,
+    hand_2,
+    hand_3,
+    hand_4;
 
   function init() {
     scene = createContainer({ x: 0, y: stagePosition(5) });
     bg = createSprite("scene-6-bg.jpg", { x: 0, y: 0 });
-    blackboard = createSprite("scene-6-blackboard.png", { x: 0, y: 545 });
-    hand_1 = createSprite("scene-6-hand-1.png", { x: 248, y: 648 });
-    hand_2 = createSprite("scene-6-hand-2.png", { x: 247, y: 880 });
-    head_1 = createSprite("scene-6-head-1.png", { x: 384, y: 726 });
-    head_2 = createSprite("scene-6-head-2.png", { x: 314, y: 1110 });
+    blackboard = createSprite("scene-6-blackboard.png", { x: 15, y: 487 });
+    hand_1 = createSprite("scene-6-hand-1.png", { x: 226, y: 487 + 114 });
+    hand_2 = createSprite("scene-6-hand-2.png", { x: 224, y: 487 + 309 });
+    hand_3 = createSprite("scene-6-hand-3.png", { x: 292, y: 487 + 592 });
+    hand_4 = createSprite("scene-6-hand-4.png", { x: 303, y: 487 + 673 });
     photo = createSprite("scene-6-photo.png", {
       x: 95,
-      y: 3,
+      y: -64,
       interactive: true
     });
-    hint = createHintContainer({ x: 323, y: 58 });
-    text_1 = createSprite("text-6-1.png", { x: 550, y: 68, alpha: 0 });
-    text_2 = createSprite("text-6-2.png", { x: 436, y: 757, alpha: 0 });
+    hint = createHintContainer({ x: 323, y: -9 });
+    text_1 = createSprite("text-6-1.png", { x: 550, y: 1, alpha: 0 });
+    text_2 = createSprite("text-6-2.png", { x: 26, y: 757, alpha: 0 });
 
     // reset state
     text_1.x -= 20;
@@ -741,12 +741,12 @@ SOLWAY.Scene[5] = (function() {
     hand_2.x += 0 * hand_2.width;
     hand_2.y += 0.5 * hand_2.height;
     hand_2.anchor.set(0, 0.5);
-    head_1.x += 1 / 2 * head_1.width;
-    head_1.y += 1 / 2 * head_1.height;
-    head_1.anchor.set(0.5, 0.5);
-    head_2.x += 0 * head_2.width;
-    head_2.y += 1 * head_2.height;
-    head_2.anchor.set(0, 1);
+    hand_3.x += 0 * hand_3.width;
+    hand_3.y += 17;
+    hand_3.pivot.set(0, 17);
+    hand_4.x += 10;
+    hand_4.y += 71;
+    hand_4.pivot.set(10, 71);
     // add sprite to container
     // add containers to scene
     scene.addChild(
@@ -755,8 +755,8 @@ SOLWAY.Scene[5] = (function() {
       blackboard,
       hand_1,
       hand_2,
-      head_1,
-      head_2,
+      hand_3,
+      hand_4,
       text_1,
       text_2,
       hint
@@ -768,16 +768,6 @@ SOLWAY.Scene[5] = (function() {
   }
 
   function anim() {
-    TweenMax.to(head_1, 1, {
-      rotation: 10 * Math.PI / 180,
-      repeat: -1,
-      yoyo: true
-    });
-    TweenMax.to(head_2, 1, {
-      rotation: -10 * Math.PI / 180,
-      repeat: -1,
-      yoyo: true
-    });
     TweenMax.to(hand_1, 0.5, {
       rotation: -20 * Math.PI / 180,
       repeat: -1,
@@ -787,6 +777,17 @@ SOLWAY.Scene[5] = (function() {
       rotation: -10 * Math.PI / 180,
       repeat: -1,
       yoyo: true
+    });
+    TweenMax.to(hand_3, 1, {
+      rotation: -10 * Math.PI / 180,
+      repeat: -1,
+      yoyo: true
+    });
+    TweenMax.to(hand_4, 2, {
+      rotation: 8 * Math.PI / 180,
+      repeat: -1,
+      yoyo: true,
+      ease: Linear.easeNone
     });
   }
 
