@@ -186,7 +186,7 @@ SOLWAY.Curtain = (function() {
   var scene, cloud, cloud_mini, bottle_left, bottle_right, tl;
 
   function init() {
-    scene = createContainer({ x: 0, y: 0 });
+    scene = createContainer({ x: 0, y: 81 });
     cloud = createSprite("curtain-cloud.png", { x: 308, y: 0, alpha: 0 });
     cloud_mini = createSprite("curtain-cloud-mini.png", {
       x: 139,
@@ -255,16 +255,16 @@ SOLWAY.Scene[0] = (function() {
 
   function init() {
     scene = createContainer({ x: 0, y: 0 });
-    logo = createContainer();
+    logo = createContainer({ x: 254, y: 140 });
     bg = createSprite("scene-1-bg.jpg");
-    button = createContainer({ x: 124, y: 210, interactive: true });
+    button = createContainer({ x: 124, y: 281, interactive: true });
     // button.displayGroup = clickGroup;
 
-    logoText1 = createSprite("logo-word-1.png", { x: 270, y: 69 });
-    logoText2 = createSprite("logo-word-2.png", { x: 281, y: 201 });
-    logoText3 = createSprite("logo-word-3.png", { x: 281, y: 337 });
-    logoText4 = createSprite("logo-word-4.png", { x: 279, y: 522 });
-    logoText5 = createSprite("logo-word-5.png", { x: 254, y: 653 });
+    logoText1 = createSprite("logo-word-1.png", { x: 16, y: 0 });
+    logoText2 = createSprite("logo-word-2.png", { x: 27, y: 132 });
+    logoText3 = createSprite("logo-word-3.png", { x: 27, y: 268 });
+    logoText4 = createSprite("logo-word-4.png", { x: 25, y: 453 });
+    logoText5 = createSprite("logo-word-5.png", { x: 0, y: 584 });
     var btnText = createSprite("btn-start.png", { x: 2, y: 13 });
     var btnShadow = createSprite("btn-start-shadow.png", { x: 0, y: 0 });
 
