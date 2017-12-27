@@ -96,7 +96,7 @@ var scroller; // 滚动模块
 var firedEvents = []; // 记录场景进度
 var clickGroup; // 可点击层
 var stages = [1355, 575, 1185, 1270, 1118, 1329, 2040, 3150, 1330]; // 场景节点
-var scrolling = false; // 是否在滚动状态
+var tapping = false; // 是否点击
 var windowHeight = window.innerHeight;
 
 var imgRoot = "../images/";
@@ -1168,11 +1168,12 @@ SOLWAY.Scroller = (function(container) {
     );
 
     var mousedown = false;
+    var y1,y2;
     document.addEventListener(
       "touchstart",
       function(e) {
         scroller.doTouchStart(e.touches, e.timeStamp);
-        mousedown = true;
+        y1 = container.y;
       },
       false
     );
@@ -1180,12 +1181,7 @@ SOLWAY.Scroller = (function(container) {
     document.addEventListener(
       "touchmove",
       function(e) {
-        if (!mousedown) {
-          return;
-        }
         scroller.doTouchMove(e.touches, e.timeStamp);
-        mousedown = true;
-        scrolling = true;
       },
       false
     );
@@ -1193,12 +1189,13 @@ SOLWAY.Scroller = (function(container) {
     document.addEventListener(
       "touchend",
       function(e) {
-        if (!mousedown) {
-          return;
-        }
         scroller.doTouchEnd(e.timeStamp);
-        mousedown = false;
-        scrolling = false;
+        y2 = container.y;
+        if(Math.abs(parseInt(y2)-parseInt(y1)) < 10) {
+          tapping = true;
+        } else {
+          tapping = false;
+        }
       },
       false
     );
@@ -1230,11 +1227,11 @@ SOLWAY.Video = (function() {
   }
 
   function show(src) {
-    if (scrolling) {
-      return;
-    }
-    tl.play();
-    console.log("show video", src);
+    setTimeout(function() {
+      if (tapping) {
+        tl.play();
+      }
+    }, 100)
   }
 
   function hide() {
