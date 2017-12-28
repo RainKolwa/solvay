@@ -1434,6 +1434,11 @@ SOLWAY.Utils = (function() {
 
 // 启动
 $(function() {
+  // auto play in wechat
+  SOLWAY.BGM.init();
+  // init video
+  SOLWAY.Video.init();
+
   // wechat config
   $.ajax({
     url: "http://solvay.uice.lu/jsapi_args.php",
@@ -1481,8 +1486,4 @@ $(function() {
 
   // Loading载入
   SOLWAY.Loader.init();
-
-  // auto play in wechat
-  SOLWAY.BGM.init();
-  SOLWAY.Video.init();
 });
