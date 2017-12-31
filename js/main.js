@@ -85,7 +85,8 @@ var loaderAssets = [
   "text-8-2.png",
   "text-9-1.png",
   "window.png",
-  "scene-8-light-1.png"
+  "scene-8-light-1.png",
+  "poster.jpg"
 ];
 var SOLWAY = window.SOLWAY || {};
 SOLWAY.Scene = [];
@@ -100,6 +101,7 @@ var tapping = false; // 是否点击
 var windowHeight = window.innerHeight;
 
 var imgRoot = "../images/";
+var videoRoot = "./source/";
 var apiRoot = "http://solvay.uice.lu/";
 var shareImg = apiRoot + "images/share.jpg?v=1";
 
@@ -462,7 +464,7 @@ SOLWAY.Scene[2] = (function() {
 
   function bindEvents() {
     man.on("pointertap", function() {
-      showVideo("video source");
+      showVideo("1.mp4");
     });
   }
 
@@ -626,7 +628,7 @@ SOLWAY.Scene[3] = (function() {
 
   function bindEvents() {
     man_middle.on("pointertap", function() {
-      showVideo("sad");
+      showVideo("2.mp4");
     });
   }
 
@@ -690,7 +692,7 @@ SOLWAY.Scene[4] = (function() {
 
   function bindEvents() {
     body.on("pointertap", function() {
-      showVideo("asda");
+      showVideo("3.mp4");
     });
   }
 
@@ -805,7 +807,7 @@ SOLWAY.Scene[5] = (function() {
 
   function bindEvents() {
     photo.on("pointertap", function() {
-      showVideo("asdds");
+      showVideo("4.mp4");
     });
   }
 
@@ -908,7 +910,7 @@ SOLWAY.Scene[6] = (function() {
 
   function bindEvents() {
     map_building.on("pointerdown", function() {
-      showVideo("asds");
+      showVideo("5.mp4");
     });
   }
 
@@ -1058,10 +1060,10 @@ SOLWAY.Scene[7] = (function() {
 
   function bindEvents() {
     king.on("pointertap", function() {
-      showVideo("asdas");
+      showVideo("6.mp4");
     });
     sunny.on("pointertap", function() {
-      showVideo("asdas");
+      showVideo("7.mp4");
     });
   }
 
@@ -1121,7 +1123,7 @@ SOLWAY.Scene[8] = (function() {
 
   function bindEvents() {
     banner.on("pointertap", function() {
-      showVideo("asdds");
+      showVideo("8.mp4");
     });
   }
 
@@ -1221,7 +1223,7 @@ SOLWAY.Video = (function() {
 
     // define timeline
     tl = new TimelineLite({ paused: true });
-    tl.to(mask, 0.2, { top: 0, alpha: 1 });
+    tl.to([ mask, video ], 0.2, { top: 0, alpha: 1 });
     tl.to(videoBox, 0.5, { scale: 1, ease: Back.easeOut });
     bindEvents();
   }
@@ -1230,15 +1232,28 @@ SOLWAY.Video = (function() {
     setTimeout(function() {
       if (tapping) {
         tl.play();
+        // attach video source
+        videoBox.find('video').attr('src', videoRoot + src);
+        videojs('video', {
+          controls: true,
+          width: 720,
+          poster: imgRoot + 'poster.jpg'
+        })
+        // stop bgm
+        pauseBgm();
       }
     }, 100)
   }
 
   function hide() {
     tl.reverse();
-    if (video.find("video")) {
-      video.find("video").attr("src", "");
-    }
+    setTimeout(function() {
+      if (video.find("video")) {
+        video.find("video").attr("src", "");
+        // start bgm
+        playBgm();
+      }
+    }, 700)
   }
 
   function bindEvents() {
@@ -1265,10 +1280,15 @@ SOLWAY.BGM = (function() {
 
   function play() {
     audio && audio.play();
+    switcher.addClass('pause');
   }
 
   function pause() {
-    audio && audio.pause();
+    if(audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+    switcher.removeClass('pause');
   }
 
   function autoPlay(id) {
@@ -1480,9 +1500,14 @@ $(function() {
   window.showVideo = SOLWAY.Video.show;
   window.hideVideo = SOLWAY.Video.hide;
 
+  window.pauseBgm = SOLWAY.BGM.pause;
+  window.playBgm = SOLWAY.BGM.play;
+
   // reset main container height and bgm button position
   $(".main").height(windowHeight);
   $(".switcher").css("top", windowHeight - 20 - 120 + "px");
+
+  // showVideo('1.mp4')
 
   // Loading载入
   SOLWAY.Loader.init();

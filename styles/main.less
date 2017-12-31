@@ -84,6 +84,9 @@
   right: 0;
   bottom: 0;
   z-index: 12;
+  display: flex;
+  justify: center;
+  align-items: center;
   .mask {
     position: fixed;
     left: 0;
@@ -93,19 +96,15 @@
     background: rgba(0, 0, 0, 0.8);
   }
   .video {
-    position: absolute;
-    width: 480px *3/2;
-    height: 270px *3/2;
+    width: 720px;
+    height: 405px;
     background: #c0c0c0;
-    left: 50%;
-    margin-left: -240px *3/2;
-    top: 50%;
-    margin-top: -240px *3;
     transform: rotate(90deg);
-    transform-origin: center center;
-    display: flex;
-    justify: center;
-    align-items: center;
+    video {
+      display: block;
+      width: 720px;
+      height: 405px;
+    }
   }
   .btn-close {
     width: 142px;

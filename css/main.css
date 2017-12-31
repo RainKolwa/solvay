@@ -224,6 +224,13 @@ table {
   right: 0;
   bottom: 0;
   z-index: 12;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .video-container .mask {
   position: fixed;
@@ -234,25 +241,16 @@ table {
   background: rgba(0, 0, 0, 0.8);
 }
 .video-container .video {
-  position: absolute;
   width: 720px;
   height: 405px;
   background: #c0c0c0;
-  left: 50%;
-  margin-left: -360px;
-  top: 50%;
-  margin-top: -720px;
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
-  -webkit-transform-origin: center center;
-          transform-origin: center center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  justify: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+}
+.video-container .video video {
+  display: block;
+  width: 720px;
+  height: 405px;
 }
 .video-container .btn-close {
   width: 142px;
