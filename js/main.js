@@ -1309,7 +1309,7 @@ SOLWAY.BGM = (function() {
       } else {
         play();
       }
-      $(this).toggleClass("pause");
+      // $(this).toggleClass("pause");
     });
 
     // autoplay hack
