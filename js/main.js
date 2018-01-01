@@ -849,7 +849,7 @@ SOLWAY.Scene[6] = (function() {
       interactive: true
     });
     map = createSprite("scene-7-map.png", { x: 95, y: 0 });
-    shanghai = createSprite("scene-7-shanghai.png", { x: 278, y: 410 });
+    shanghai = createSprite("scene-7-shanghai.png", { x: 269, y: 414 });
     text_1 = createSprite("text-7-1.png", { x: 24, y: 75, alpha: 0 });
     text_2 = createSprite("text-7-2.png", { x: 517, y: 843, alpha: 0 });
     hint = createHintContainer({ x: 320, y: 184 });
