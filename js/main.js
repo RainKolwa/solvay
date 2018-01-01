@@ -358,6 +358,13 @@ SOLWAY.Scene[1] = (function() {
       x: "+=20",
       alpha: 1
     });
+    // CustomWiggle.create("demoWiggle", {wiggles:8});
+    // var tl = new TimelineMax();
+    // tl.to(text, 0.15, {scale:0.90, rotation:-8});
+    // tl.to(text, 0.15, {scale:1.2, rotation:0, ease:Linear.easeNone}, "+=0.1");
+    // tl.to(text, 0.75, {rotation:3, ease:"demoWiggle"});
+    // tl.to(text, 0.15, {scale:1});
+    // tl.play();
   }
 
   function bindEvents() {
@@ -732,7 +739,7 @@ SOLWAY.Scene[5] = (function() {
     });
     hint = createHintContainer({ x: 323, y: -9 });
     text_1 = createSprite("text-6-1.png", { x: 550, y: 1, alpha: 0 });
-    text_2 = createSprite("text-6-2.png", { x: 26, y: 757, alpha: 0 });
+    text_2 = createSprite("text-6-2.png", { x: 500, y: 680, alpha: 0 });
 
     // reset state
     text_1.x -= 20;
@@ -1087,7 +1094,7 @@ SOLWAY.Scene[8] = (function() {
       interactive: true
     });
     people = createSprite("scene-9-people.png", { x: 0, y: 194 });
-    text = createSprite("text-9-1.png", { x: 582, y: 792, alpha: 0 });
+    text = createSprite("text-9-1.png", { x: 26, y: 463, alpha: 0 });
     hint = createHintContainer({ x: 464, y: 35 });
 
     // reset state
