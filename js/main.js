@@ -1236,7 +1236,7 @@ SOLWAY.Video = (function() {
         videoBox.find('video').attr('src', videoRoot + src);
         videojs('video', {
           controls: true,
-          width: 720,
+          width: 720 * 1.2,
           poster: imgRoot + 'poster.jpg'
         })
         // stop bgm
