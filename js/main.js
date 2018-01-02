@@ -1506,7 +1506,7 @@ $(function() {
       });
       wx.ready(function() {
         SOLWAY.Utils.setWechatShare({
-          title: "索尔维传奇",
+          title: "发明氨碱法，比肩诺贝尔，他的公司在150多年里改变着世界",
           desc: "索尔维梦想中心正式启动"
         });
       });
