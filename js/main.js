@@ -87,13 +87,14 @@ var loaderAssets = [
   "window.png",
   "scene-8-light-1.png",
   "poster.jpg",
-  "scene-10-be.png",
   "scene-10-bg.jpg",
-  "scene-10-continue.png",
-  "scene-10-smoke.png",
   "scene-10-text.png",
-  "scene-10-to.png",
-  "scene-10-tube.png"
+  "scene-10-word-1.png",
+  "scene-10-word-2.png",
+  "scene-10-word-3.png",
+  "scene-10-word-4.png",
+  "scene-10-word-5.png",
+  "scene-10-word-6.png"
 ];
 var SOLWAY = window.SOLWAY || {};
 SOLWAY.Scene = [];
@@ -103,7 +104,7 @@ var container; // 舞台容器
 var scroller; // 滚动模块
 var firedEvents = []; // 记录场景进度
 var clickGroup; // 可点击层
-var stages = [1355, 575, 1185, 1270, 1118, 1329, 2040, 3150, 1330, 1075]; // 场景节点
+var stages = [1355, 575, 1185, 1270, 1118, 1329, 2040, 3150, 1173, 1075]; // 场景节点
 var tapping = false; // 是否点击
 var windowHeight = window.innerHeight;
 
@@ -1119,12 +1120,12 @@ SOLWAY.Scene[8] = (function() {
     bg = createSprite("scene-9-bg.jpg", { x: 0, y: 0 });
     banner = createSprite("scene-9-banner.png", {
       x: 431,
-      y: 56,
+      y: 56-157,
       interactive: true
     });
-    people = createSprite("scene-9-people.png", { x: 0, y: 194 });
-    text = createSprite("text-9-1.png", { x: 26, y: 463, alpha: 0 });
-    hint = createHintContainer({ x: 464, y: 35 });
+    people = createSprite("scene-9-people.png", { x: 0, y: 194-157, interactive: true });
+    text = createSprite("text-9-1.png", { x: 26, y: 463-157, alpha: 0 });
+    hint = createHintContainer({ x: 340, y: 35-157+40 });
 
     // reset state
     banner.x += 0.5 * banner.width;
@@ -1161,6 +1162,9 @@ SOLWAY.Scene[8] = (function() {
     banner.on("pointertap", function() {
       showVideo("8.mp4");
     });
+    people.on("pointertap", function() {
+      showVideo("8.mp4");
+    });
     hint.on("pointertap", function() {
       showVideo("8.mp4");
     });
@@ -1175,29 +1179,31 @@ SOLWAY.Scene[8] = (function() {
 
 // -----------------场景10----------------- //
 SOLWAY.Scene[9] = (function() {
-  var scene, bg, be, contnue, smoke, text, to, tube;
+  var scene, bg, text, word1, word2, word3, word4, word5, word6;
 
   function init() {
     scene = createContainer({ x: 0, y: stagePosition(9) });
     bg = createSprite("scene-10-bg.jpg", { x: 0, y: 0 });
-
-    to = createSprite("scene-10-to.png", { x: 291, y: 67, alpha: 0 });
-    be = createSprite("scene-10-be.png", { x: 302, y: 270, alpha: 0 });
-    contnue = createSprite("scene-10-continue.png", { x: 298, y: 445, alpha: 0 });
-    smoke = createSprite("scene-10-smoke.png", { x: 420, y: 684, alpha: 0 });
+    word1 = createSprite("scene-10-word-1.png", { x:305, y:123, alpha:0 });
+    word2 = createSprite("scene-10-word-2.png", { x:301, y:273, alpha:0 });
+    word3 = createSprite("scene-10-word-3.png", { x:305, y:390, alpha:0 });
+    word4 = createSprite("scene-10-word-4.png", { x:317, y:518, alpha:0 });
+    word5 = createSprite("scene-10-word-5.png", { x:310, y:635, alpha:0 });
+    word6 = createSprite("scene-10-word-6.png", { x:311, y:766, alpha:0 });
     text = createSprite("scene-10-text.png", { x: 152, y: 140, alpha: 0 });
-    tube = createSprite("scene-10-tube.png", { x: 299, y: 706, alpha: 0 });
 
     // reset state
     text.x -= 20;
-    to.x += 40;
-    be.x += 40;
-    contnue.x += 40;
-    tube.x += 40;
+    word1.x += 40;
+    word2.x += 40;
+    word3.x += 40;
+    word4.x += 40;
+    word5.x += 40;
+    word6.x += 40;
 
     // add sprite to container
     // add containers to scene
-    scene.addChild(bg, be, contnue, smoke, text, to, tube);
+    scene.addChild(bg, text, word1, word2, word3, word4, word5, word6);
     // bind events
     bindEvents();
     // return scene
@@ -1205,30 +1211,20 @@ SOLWAY.Scene[9] = (function() {
   }
 
   function anim() {
-    setTimeout(function() {
-      smoke.alpha = 1;
-    }, 1600)
   }
 
   function customAnim() {
 
     TweenMax.staggerTo(
-      [to, be, contnue, tube],
+      [word1, word2, word3, word4, word5, word6],
       0.5,
       { alpha: 1, x: "-=40", ease: Back.easeInOut },
       0.2
     );
-    // TweenMax.from(button, 0.5, { x: "-=20", alpha: 0 }).delay(.5);
     TweenMax.to(text, 0.8, {
       x: "+=20",
       alpha: 1
-    }).delay(0.8);
-    TweenMax.to(smoke, 2, {
-      x: "+=60",
-      alpha: 0,
-      scaleY: 1,
-      repeat: -1
-    }).delay(1.6);
+    }).delay(1.2);
   }
 
   function bindEvents() {
