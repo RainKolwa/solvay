@@ -86,7 +86,14 @@ var loaderAssets = [
   "text-9-1.png",
   "window.png",
   "scene-8-light-1.png",
-  "poster.jpg"
+  "poster.jpg",
+  "scene-10-be.png",
+  "scene-10-bg.jpg",
+  "scene-10-continue.png",
+  "scene-10-smoke.png",
+  "scene-10-text.png",
+  "scene-10-to.png",
+  "scene-10-tube.png"
 ];
 var SOLWAY = window.SOLWAY || {};
 SOLWAY.Scene = [];
@@ -96,7 +103,7 @@ var container; // 舞台容器
 var scroller; // 滚动模块
 var firedEvents = []; // 记录场景进度
 var clickGroup; // 可点击层
-var stages = [1355, 575, 1185, 1270, 1118, 1329, 2040, 3150, 1330]; // 场景节点
+var stages = [1355, 575, 1185, 1270, 1118, 1329, 2040, 3150, 1330, 1075]; // 场景节点
 var tapping = false; // 是否点击
 var windowHeight = window.innerHeight;
 
@@ -1156,6 +1163,74 @@ SOLWAY.Scene[8] = (function() {
     hint.on("pointertap", function() {
       showVideo("8.mp4");
     });
+  }
+
+  return {
+    init: init,
+    anim: anim,
+    customAnim: customAnim
+  };
+})();
+
+// -----------------场景10----------------- //
+SOLWAY.Scene[9] = (function() {
+  var scene, bg, be, contnue, smoke, text, to, tube;
+
+  function init() {
+    scene = createContainer({ x: 0, y: stagePosition(9) });
+    bg = createSprite("scene-10-bg.jpg", { x: 0, y: 0 });
+
+    to = createSprite("scene-10-to.png", { x: 291, y: 67, alpha: 0 });
+    be = createSprite("scene-10-be.png", { x: 302, y: 270, alpha: 0 });
+    contnue = createSprite("scene-10-continue.png", { x: 298, y: 445, alpha: 0 });
+    smoke = createSprite("scene-10-smoke.png", { x: 420, y: 684, alpha: 0 });
+    text = createSprite("scene-10-text.png", { x: 152, y: 140, alpha: 0 });
+    tube = createSprite("scene-10-tube.png", { x: 299, y: 706, alpha: 0 });
+
+    // reset state
+    text.x -= 20;
+    to.x += 40;
+    be.x += 40;
+    contnue.x += 40;
+    tube.x += 40;
+
+    // add sprite to container
+    // add containers to scene
+    scene.addChild(bg, be, contnue, smoke, text, to, tube);
+    // bind events
+    bindEvents();
+    // return scene
+    return scene;
+  }
+
+  function anim() {
+    setTimeout(function() {
+      smoke.alpha = 1;
+    }, 1600)
+  }
+
+  function customAnim() {
+
+    TweenMax.staggerTo(
+      [to, be, contnue, tube],
+      0.5,
+      { alpha: 1, x: "-=40", ease: Back.easeInOut },
+      0.2
+    );
+    // TweenMax.from(button, 0.5, { x: "-=20", alpha: 0 }).delay(.5);
+    TweenMax.to(text, 0.8, {
+      x: "+=20",
+      alpha: 1
+    }).delay(0.8);
+    TweenMax.to(smoke, 2, {
+      x: "+=60",
+      alpha: 0,
+      scaleY: 1,
+      repeat: -1
+    }).delay(1.6);
+  }
+
+  function bindEvents() {
   }
 
   return {
