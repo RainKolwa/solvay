@@ -473,6 +473,9 @@ SOLWAY.Scene[2] = (function() {
     man.on("pointertap", function() {
       showVideo("1.mp4");
     });
+    hint.on("pointertap", function() {
+      showVideo("1.mp4");
+    });
   }
 
   return {
@@ -637,6 +640,9 @@ SOLWAY.Scene[3] = (function() {
     man_middle.on("pointertap", function() {
       showVideo("2.mp4");
     });
+    hint.on("pointertap", function() {
+      showVideo("2.mp4");
+    });
   }
 
   return {
@@ -699,6 +705,9 @@ SOLWAY.Scene[4] = (function() {
 
   function bindEvents() {
     body.on("pointertap", function() {
+      showVideo("3.mp4");
+    });
+    hint.on("pointertap", function() {
       showVideo("3.mp4");
     });
   }
@@ -816,6 +825,9 @@ SOLWAY.Scene[5] = (function() {
     photo.on("pointertap", function() {
       showVideo("4.mp4");
     });
+    hint.on("pointertap", function() {
+      showVideo("4.mp4");
+    });
   }
 
   return {
@@ -917,6 +929,9 @@ SOLWAY.Scene[6] = (function() {
 
   function bindEvents() {
     map_building.on("pointerdown", function() {
+      showVideo("5.mp4");
+    });
+    hint.on("pointerdown", function() {
       showVideo("5.mp4");
     });
   }
@@ -1069,7 +1084,13 @@ SOLWAY.Scene[7] = (function() {
     king.on("pointertap", function() {
       showVideo("6.mp4");
     });
+    hint.on("pointertap", function() {
+      showVideo("6.mp4");
+    });
     sunny.on("pointertap", function() {
+      showVideo("7.mp4");
+    });
+    hint2.on("pointertap", function() {
       showVideo("7.mp4");
     });
   }
@@ -1130,6 +1151,9 @@ SOLWAY.Scene[8] = (function() {
 
   function bindEvents() {
     banner.on("pointertap", function() {
+      showVideo("8.mp4");
+    });
+    hint.on("pointertap", function() {
       showVideo("8.mp4");
     });
   }
@@ -1382,6 +1406,7 @@ SOLWAY.Utils = (function() {
         _container[key] = value;
       });
     }
+    _container.interactive = true;
     // add animation
     TweenMax.to(_container, 0.3, { x: "+=10", y: "-=10", yoyo: true }).repeat(
       -1
