@@ -1449,7 +1449,7 @@ SOLWAY.Utils = (function() {
     var link = window.location.href;
 
     wx.onMenuShareTimeline({
-      title: title,
+      title: desc,
       link: link,
       imgUrl: imgUrl,
       success: function() {
@@ -1506,8 +1506,8 @@ $(function() {
       });
       wx.ready(function() {
         SOLWAY.Utils.setWechatShare({
-          title: "发明氨碱法，比肩诺贝尔，他的公司在150多年里改变着世界",
-          desc: "索尔维梦想中心正式启动"
+          title: "索尔维传奇",
+          desc: "发明氨碱法，比肩诺贝尔，他的公司在150多年里改变着世界"
         });
       });
     }
