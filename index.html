@@ -2,13 +2,12 @@
 <html>
   <head>
     <script>
-    var scaleMetaTag = document.createElement("meta");
-var deltaWindowWidth = window.screen.width / 640;
-scaleMetaTag.name = "viewport";
-scaleMetaTag.content =
-  "width=device-width,user-scalable=no,initial-scale=" + deltaWindowWidth;
-document.getElementsByTagName("head")[0].appendChild(scaleMetaTag);
-</script>
+      var scaleMetaTag = document.createElement("meta");
+      var deltaWindowWidth = window.screen.width / 640;
+      scaleMetaTag.name = "viewport";
+      scaleMetaTag.content = "width=device-width,user-scalable=no,initial-scale=" + deltaWindowWidth;
+      document.getElementsByTagName("head")[0].appendChild(scaleMetaTag);
+    </script>
     <meta charset="uft-8">
     <meta name="msapplication-tap-highlight" content="no" />
     <meta content="yes" name="apple-mobile-web-app-capable" />
@@ -16,6 +15,15 @@ document.getElementsByTagName("head")[0].appendChild(scaleMetaTag);
     <title>索尔维传奇</title>
     <link rel="stylesheet" type="text/css" href="./css/main.css"></link>
     <link href="./styles/video.css" rel="stylesheet">
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?0b356420da07a402bb2e95d25477e17b";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
   </head>
   <body landscape="no">
     <!-- Stage -->
@@ -57,6 +65,6 @@ document.getElementsByTagName("head")[0].appendChild(scaleMetaTag);
     <script type="text/javascript" src="js/tweenmax.min.js"></script>
     <script type="text/javascript" src="js/video.min.js"></script>
 
-    <script type="text/javascript" src="js/main.js?v=0.0.2"></script>
+    <script type="text/javascript" src="js/main.js?v=0.0.3"></script>
   </body>
 </html>

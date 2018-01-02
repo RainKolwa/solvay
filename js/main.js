@@ -312,6 +312,7 @@ SOLWAY.Scene[0] = (function() {
   function bindEvents() {
     button.on("pointertap", function() {
       SOLWAY.Curtain.anim(actionMv);
+      trackEvent("开始", "点击");
     });
   }
 
@@ -1347,6 +1348,8 @@ SOLWAY.Video = (function() {
         })
         // stop bgm
         pauseBgm();
+        // track data
+        trackEvent('视频', '播放', src);
       }
     }, 100)
   }
@@ -1412,8 +1415,12 @@ SOLWAY.BGM = (function() {
       e.preventDefault();
       if ($(this).hasClass("pause")) {
         pause();
+        // track data
+        trackEvent('BGM开关', '关闭');
       } else {
         play();
+        // track data
+        trackEvent('BGM开关', '打开');
       }
       // $(this).toggleClass("pause");
     });
@@ -1516,7 +1523,7 @@ SOLWAY.Utils = (function() {
     });
     return h;
   }
-  //export
+  // 微信分享
   function setWechatShare(data) {
     var title = data.title;
     var desc = data.desc;
@@ -1529,9 +1536,11 @@ SOLWAY.Utils = (function() {
       imgUrl: imgUrl,
       success: function() {
         // 用户确认分享后执行的回调函数
+        trackEvent('朋友圈', '分享');
       },
       cancel: function() {
         // 用户取消分享后执行的回调函数
+        trackEvent('朋友圈', '取消分享');
       }
     });
     wx.onMenuShareAppMessage({
@@ -1541,12 +1550,25 @@ SOLWAY.Utils = (function() {
       imgUrl: imgUrl,
       success: function() {
         // 用户确认分享后执行的回调函数
+        trackEvent('朋友', '分享');
       },
       cancel: function() {
         // 用户取消分享后执行的回调函数
+        trackEvent('朋友', '取消分享');
       }
     });
   }
+
+  // 统计页面
+  function trackPageview(path) {
+    _hmt.push(["_trackPageview", path]);
+  }
+
+  // 统计事件
+  function trackEvent(category, action, opt_label, opt_value) {
+    _hmt.push(["_trackEvent", category, action, opt_label, opt_value]);
+  }
+
 
   return {
     createAnimatedSprite: createAnimatedSprite,
@@ -1555,7 +1577,9 @@ SOLWAY.Utils = (function() {
     createSprite: createSprite,
     fireOnce: fireOnce,
     stagePosition: stagePosition,
-    setWechatShare: setWechatShare
+    setWechatShare: setWechatShare,
+    trackEvent: trackEvent,
+    trackPageview: trackPageview
   };
 })();
 
@@ -1603,6 +1627,8 @@ $(function() {
   window.createAnimatedSprite = SOLWAY.Utils.createAnimatedSprite;
   window.fireOnce = SOLWAY.Utils.fireOnce;
   window.stagePosition = SOLWAY.Utils.stagePosition;
+  window.trackPageview = SOLWAY.Utils.trackPageview;
+  window.trackEvent = SOLWAY.Utils.trackEvent;
 
   window.showVideo = SOLWAY.Video.show;
   window.hideVideo = SOLWAY.Video.hide;
