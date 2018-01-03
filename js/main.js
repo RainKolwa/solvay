@@ -155,15 +155,15 @@ SOLWAY.Loader = (function() {
 
   function setup() {
     // hide loading and start playing
-    hide();
+    setTimeout(function() {
+      TweenMax.to(loading, .6, { alpha: 0, onComplete: hide })
+    }, 100)
     SOLWAY.Main.init();
   }
 
   function hide() {
     // hide loading
-    setTimeout(function() {
-      loading.fadeOut();
-    }, 100)
+    loading.hide();
   }
 
   return {
