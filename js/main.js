@@ -1323,7 +1323,7 @@ SOLWAY.Video = (function() {
 
   function init() {
     // reset state
-    TweenLite.set(mask, { top: "100%", left: 0, alpha: 0 });
+    TweenLite.set(mask, { top: "100%", alpha: 0 });
     TweenLite.set(videoBox, { scale: 0 });
 
     // define timeline

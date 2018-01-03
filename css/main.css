@@ -243,7 +243,7 @@ table {
 .video-container .video {
   width: 864px;
   height: 486px;
-  background: none;
+  background: #c0c0c0;
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
   -webkit-transform-origin: center center;
