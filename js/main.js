@@ -161,7 +161,9 @@ SOLWAY.Loader = (function() {
 
   function hide() {
     // hide loading
-    loading.fadeOut();
+    setTimeout(function() {
+      loading.fadeOut();
+    }, 100)
   }
 
   return {
