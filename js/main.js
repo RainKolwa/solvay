@@ -108,8 +108,10 @@ var stages = [1355, 575, 1185, 1270, 1118, 1329, 2040, 3150, 1173, 1075]; // 场
 var tapping = false; // 是否点击
 var windowHeight = window.innerHeight;
 
-var imgRoot = "../images/";
-var videoRoot = "./source/";
+var useCDN = true;
+var cdn = "http://static-solvay.uice.lu";
+var imgRoot = useCDN ? cdn + '/images/' : "../images/";
+var videoRoot = useCDN ? cdn + '/source/' : "./source/";
 var apiRoot = "http://solvay.uice.lu/";
 var shareImg = apiRoot + "images/share.jpg?v=1";
 
